@@ -95,7 +95,7 @@ class OhlohTest
   private
 
   ################################
-  # Report language statsitics
+  # Report language statistics
   def report(list, query)
     items = list.size()
 
@@ -140,7 +140,7 @@ class OhlohTest
     while items_read < items_available
       body = http_get("http://www.ohloh.net/languages.xml?api_key=#{API_KEY}&page=#{page}&query=#{query}")
 
-      # Parse more pages page
+      # Parse more pages
       list = xmlp.parse(body)
 
       items_read += xmlp.items_returned
