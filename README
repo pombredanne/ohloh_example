@@ -1,0 +1,7 @@
+Example usage of the Ohloh API to report language statistics.
+
+Takes a programming language name as a command line argument 
+and uses it as  a query string to the Ohloh API and displays
+statistics for any matching languages.
+
+Example: ./ohloh_example java
