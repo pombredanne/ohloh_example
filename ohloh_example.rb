@@ -136,9 +136,10 @@ class OhlohTest
     items_read      = 0
     page            = 2
     list            = nil
+    t_query         = CGI.escape(query)
 
     # Get first page
-    body = http_get("http://www.ohloh.net/languages.xml?api_key=#{API_KEY}&query=#{query}")
+    body = http_get("http://www.ohloh.net/languages.xml?api_key=#{API_KEY}&query=#{t_query}")
 
     # Create XML parser and parse first page
     xmlp = XmlParser.new()
@@ -151,7 +152,7 @@ class OhlohTest
 
     # Read in more pages until all available items are read in
     while items_read < items_available
-      body = http_get("http://www.ohloh.net/languages.xml?api_key=#{API_KEY}&page=#{page}&query=#{query}")
+      body = http_get("http://www.ohloh.net/languages.xml?api_key=#{API_KEY}&page=#{page}&query=#{t_query}")
 
       # Parse more pages
       list = xmlp.parse(body)
