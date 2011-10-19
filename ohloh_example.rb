@@ -17,8 +17,14 @@ class XmlParser
   attr_reader :items_available, :items_returned
 
   def initialize()
+    # Stack to handle nested tags
     @stack    = Array.new()
+    
+    # This holds the hash of all returned languages
+    # and data
     @object   = Hash.new()
+
+    # Language object that will be filled with XML data
     @language = nil
 
     @items_available = 0
@@ -38,6 +44,8 @@ class XmlParser
   end
 
   def tag_start(name, attr)
+    # Handle 'language' start tag, create new object
+    # and indicate we're inside the 'language' tag.
     if name == 'language' && !@in_language
       @language = Hash.new()
       @in_language = true
@@ -56,15 +64,20 @@ class XmlParser
     # Pop stack
     element = @stack[-1]
 
+    # Set the availabe and returned data
     if name == 'items_available'
       @items_available = element[:text].to_i
     elsif name == 'items_returned'
       @items_returned = element[:text].to_i
     end
 
+    # Handle the 'language' end tag, 
+    # add language object
     if @in_language && name == 'language'
       @in_language = false
       @object[@language['nice_name']] = @language
+
+    # Handle tags inside the 'language' tag
     elsif @in_language
       @language[name] = element[:text]
     end
